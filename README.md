@@ -53,7 +53,7 @@ Let's just cut out the chase and FUN beginsssss :smiling_imp:
 
 **Step 1:** 
 
-Clone this sacred scroll from git repository : https://gitlab.com/himanshiparnami/terraform-gameday.git 
+Clone this sacred scroll from git repository : https://github.com/OT-TRAINING/terraform 
 
 <br>
 
