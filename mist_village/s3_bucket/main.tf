@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "S3" {
-  bucket = var.s3_bucket_names
+  for_each = toset(var.aws_s3_bucket_names)
+  bucket = each.key
 }
 
 resource "aws_s3_object" "object" {

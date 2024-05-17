@@ -1,7 +1,7 @@
 resource "aws_cloudfront_distribution" "cloudfront_distribution" {
-  aliases             = var.aliases
+  aliases             = ["lakshit-bakshi-leaf.opstree-war.live", "lakshit-bakshi-mist.opstree-war.live"]
   default_root_object = var.default_root_object
-  enabled             = var.enabled
+  enabled             = var.enable
   price_class         = var.price_class
   retain_on_delete    = var.retain_on_delete
 
@@ -33,7 +33,7 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
     dynamic "forwarded_values" {
       for_each = var.cache_policy_id == null ? [1] : []
       content {
-        query_string = var.query_string
+        query_string = var.forward_query_string
 
         cookies {
           forward = var.forward

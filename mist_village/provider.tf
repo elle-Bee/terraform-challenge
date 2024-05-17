@@ -1,16 +1,6 @@
 terraform {
   required_version = ">= 0.13"
-}
-provider "aws" {
-  region = local.region
-}
-
-provider "aws" {
-  region = "us-east-1"
-  alias  = "cdn"
-}
-
-terraform {
+  
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -19,3 +9,11 @@ terraform {
   }
 }
 
+provider "aws" {
+  region = local.region
+}
+
+provider "aws" {
+  region = "us-east-1"
+  alias  = "cloudfront"
+}

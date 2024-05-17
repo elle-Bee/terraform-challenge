@@ -1,11 +1,16 @@
 variable "S3_name" {
-  type = any
+  type = string
 }
 
 variable "s3_bucket" {
-  type = any
+  type = string
 }
 
 variable "cloudfront_arn" {
-  type = any
+  type = string
+}
+
+variable "s3_bucket_arn" {
+  description = "The ARN of the S3 bucket"
+  type        = string
 }

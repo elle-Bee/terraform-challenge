@@ -1,5 +1,5 @@
-variable "s3_bucket_names" {
-  type = list(bool)
+variable "aws_s3_bucket_names" {
+  type = list(string)
 }
 
 variable "key" {

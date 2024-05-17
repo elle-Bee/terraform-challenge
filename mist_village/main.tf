@@ -5,7 +5,7 @@ resource "random_pet" "name" {
 
 module "bucket" {
   source          = "./s3_bucket"
-  s3_bucket_names = "ot-${var.teamname}-${random_pet.name.id}"
+  aws_s3_bucket_names = ["ot-${var.teamname}-${random_pet.name.id}"]
   key             = var.key
   content_type    = var.content_type
   content         = data.template_file.index_html.rendered
@@ -18,32 +18,32 @@ data "template_file" "index_html" {
   }
 }
 
-module "cdn" {
+module "cloudfront" {
   source                            = "./cloudfront"
   default_root_object               = var.default_root_object
-  enabled                           = var.enabled
+  enable                            = var.enabled
   price_class                       = var.price_class
   retain_on_delete                  = var.retain_on_delete
-  domain_name                       = module.bucket.website
+  domain_name                       = module.s3_bucket.website_endpoint
   origin_id                         = var.origin_id
   allowed_methods                   = var.allowed_methods
   cached_methods                    = var.cached_methods
   target_origin_id                  = var.target_origin_id
   viewer_protocol_policy            = var.viewer_protocol_policy
   restriction_type                  = var.restriction_type
-  locations                         = var.location
+  locations                         = var.locations
   cloudfront_default_certificate    = var.cloudfront_default_certificate
   acm_certificate_arn               = data.aws_acm_certificate.cert.arn
   forward_query_string              = var.forward_query_string
-  forward                           = var.forward_cache
-  team_name                         = var.teamname
+  forward                           = var.forward
+  teamname                          = var.teamname
   ssl_support_method                = var.ssl_support_method
   oac_name                          = var.oac_name
   oac_description                   = var.oac_description
   origin_access_control_origin_type = var.origin_access_control_origin_type
   signing_behavior                  = var.signing_behavior
   signing_protocol                  = var.signing_protocol
-  aliases                           = ["${var.teamname}-mist.opstree-war.live"]
+  #alias                             = ["${var.teamname}-mist.opstree-war.live"]
   default_ttl                       = var.default_ttl
   min_ttl                           = var.min_ttl
   max_ttl                           = var.max_ttl
@@ -52,10 +52,11 @@ module "cdn" {
 }
 
 module "bucket_policy" {
-  source         = "s3_bucket_policy"
+  source         = "./s3_bucket_policy"
   S3_name        = module.bucket.S3_name
-  cloudfront_arn = module.cdn.cloudfront_arn
-  s3_bucket_arn  = module.bucket.bucket_arn
+  s3_bucket      = "./s3_bucket"
+  cloudfront_arn = module.cloudfront.cloudfront_arn
+  s3_bucket_arn  = module.s3_bucket.bucket_arn
 }
 
 module "route53_zone" {

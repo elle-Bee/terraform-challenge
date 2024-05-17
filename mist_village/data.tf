@@ -1,5 +1,5 @@
 data "aws_acm_certificate" "cert" {
-  provider = aws.cdn
+  provider = aws.cloudfront
   domain   = "*.opstree-war.live"
   statuses = ["ISSUED"]
 }

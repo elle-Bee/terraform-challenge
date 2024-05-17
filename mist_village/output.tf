@@ -7,5 +7,5 @@ output "S3_bucket_name" {
 }
 
 output "cloudfront_arn" {
-  value = module.cdn.cloudfront_arn
+  value = module.cloudfront.cloudfront_arn
 }
