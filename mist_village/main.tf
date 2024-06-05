@@ -3,7 +3,7 @@ resource "random_pet" "name" {
   separator = "-"
 }
 
-module "bucket" {
+module "aws_s3_bucket" {
   source          = "./s3_bucket"
   aws_s3_bucket_names = ["ot-${var.teamname}-${random_pet.name.id}"]
   key             = var.key
@@ -24,7 +24,7 @@ module "cloudfront" {
   enable                            = var.enabled
   price_class                       = var.price_class
   retain_on_delete                  = var.retain_on_delete
-  domain_name                       = module.s3_bucket.website_endpoint
+  domain_name                       = module.aws_s3_bucket.website_endpoint
   origin_id                         = var.origin_id
   allowed_methods                   = var.allowed_methods
   cached_methods                    = var.cached_methods
@@ -53,10 +53,10 @@ module "cloudfront" {
 
 module "bucket_policy" {
   source         = "./s3_bucket_policy"
-  S3_name        = module.bucket.S3_name
   s3_bucket      = "./s3_bucket"
-  cloudfront_arn = module.cloudfront.cloudfront_arn
-  s3_bucket_arn  = module.s3_bucket.bucket_arn
+  s3_name        = var.s3_name
+  cloudfront_arn = var.cloudfront_arn
+  s3_bucket_arn  = var.s3_bucket_arn
 }
 
 module "route53_zone" {
@@ -75,5 +75,3 @@ module "route53_zone" {
     }
   }
 }
-
-

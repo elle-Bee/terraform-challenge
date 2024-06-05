@@ -49,7 +49,7 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
   }
 }
 
-resource "aws_cloudfront_origin_access_control" "oai" {
+resource "aws_cloudfront_origin_access_control" "oac" {
   name                              = "${var.teamname}-${var.oac_name}"
   description                       = var.oac_description
   origin_access_control_origin_type = var.origin_access_control_origin_type

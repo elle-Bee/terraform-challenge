@@ -1,3 +1,3 @@
-output "bucket_arn" {
-  value = aws_s3_bucket_policy.policy.bucket
+output "bucket_policy" {
+  value = aws_s3_bucket_policy.allow_access_from_another_account.policy
 }

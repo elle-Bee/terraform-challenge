@@ -133,3 +133,26 @@ variable "max_ttl" {
   default     = 31536000
   description = "Maximum amount of time (in seconds) that an object is in a CloudFront cache"
 }
+
+variable "s3_name" {
+  type = string
+  description = "The name of the S3 bucket"
+}
+
+variable "cloudfront_arn" {
+  type = string
+  description = "The ARN of the CloudFront distribution"
+}
+
+variable "s3_bucket_arn" {
+  type = string
+  description = "The ARN of the S3 bucket"
+}
+
+variable "domain_name" {
+  type = number
+}
+
+variable "s3_bucket" {
+  type = string
+}
